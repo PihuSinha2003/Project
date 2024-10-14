@@ -1,0 +1,22 @@
+version: '3'
+services:
+  node-app:
+    build: .
+    ports:
+      - "3001:3000"  # Maps port 3001 on the host to port 3000 in the container
+    environment:
+      - PORT=3000
+      - MONGO_IP=mongo  # Add this to reference the mongo service
+      - MONGO_USER=root
+      - MONGO_PASSWORD=root
+
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - mongo-db:/data/db
+
+volumes:
+  mongo-db:
